@@ -4,6 +4,7 @@ import com.taskmanager.model.Epic;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Manager {
@@ -97,5 +98,12 @@ public class Manager {
             epicTasks.remove(id);
         else if (subTasks.containsKey(id))
             subTasks.remove(id);
+    }
+
+    public ArrayList<SubTask> subTasksOfEpicTask(Integer id){
+        if (epicTasks.containsKey(id))
+            return epicTasks.get(id).getSubTasks();
+        else
+            return null;
     }
 }
