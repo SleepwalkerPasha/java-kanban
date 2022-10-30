@@ -14,14 +14,14 @@ public class Epic extends Task{
         return subTasks;
     }
 
-    public void addSubTask(SubTask subTasks) {
-        this.subTasks.add(subTasks);
+    public void addSubTask(SubTask subTask) {
+        this.subTasks.add(subTask);
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                super.toString() +
+                super.toString() + ",\n" +
                 "subTasks=" + subTasks.toString() +
                 '}';
     }

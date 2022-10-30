@@ -1,6 +1,8 @@
 package com.taskmanager.model;
 
-public class Task{
+import java.util.Objects;
+
+public class Task {
     private String name;
     private String description;
     private Integer id;
@@ -48,10 +50,31 @@ public class Task{
     @Override
     public String toString() {
         return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
+                "name='" + name + "',\n" +
+                "description='" + description + "',\n" +
+                "id=" + id + ",\n" +
+                "status=" + status +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return name.equals(task.name) && description.equals(task.description) && status == task.status;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        if (name != null)
+            hash *= name.hashCode();
+        if (description != null)
+            hash += 31 * description.hashCode();
+        if (status != null)
+            hash += 11 * status.hashCode();
+        return hash;
+    }
+
 }

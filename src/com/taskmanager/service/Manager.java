@@ -17,11 +17,11 @@ public class Manager {
 
     private HashMap<Integer, SubTask> subTasks;
 
-    public Manager(int countOfTasks, HashMap<Integer, Task> regularTasks, HashMap<Integer, Epic> epicTasks, HashMap<Integer, SubTask> subTasks) {
-        this.countOfTasks = countOfTasks;
-        this.regularTasks = regularTasks;
-        this.epicTasks = epicTasks;
-        this.subTasks = subTasks;
+    public Manager() {
+        this.regularTasks = new HashMap<>();
+        this.epicTasks = new HashMap<>();
+        this.subTasks = new HashMap<>();
+        countOfTasks = 0;
     }
 
     public Task getTaskById(Integer id){
@@ -65,17 +65,25 @@ public class Manager {
         }
     }
 
-    public void makeTask(Task task){
+    public void createTask(Task task){
         if (task.getClass().equals(Task.class)){
-            regularTasks.put(task.getId(), task);
+            if (!regularTasks.containsKey(task.getId())){
+                regularTasks.put(task.getId(), task);
+                countOfTasks++;
+            }
         }else if (task.getClass().equals(Epic.class)){
-            Epic epic = (Epic) task;
-            epicTasks.put(epic.getId(), epic);
+            if (!epicTasks.containsKey(task.getId())){
+                Epic epic = (Epic) task;
+                epicTasks.put(epic.getId(), epic);
+                countOfTasks++;
+            }
         }else if (task.getClass().equals(SubTask.class)){
-            SubTask sTask = (SubTask) task;
-            subTasks.put(sTask.getId(), sTask);
+            if (!subTasks.containsKey(task.getId())){
+                SubTask sTask = (SubTask) task;
+                subTasks.put(sTask.getId(), sTask);
+                countOfTasks++;
+            }
         }
-        countOfTasks++;
     }
 
     public void removeAllTasks(){

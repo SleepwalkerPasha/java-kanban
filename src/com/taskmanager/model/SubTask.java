@@ -19,8 +19,10 @@ public class SubTask extends Task{
     @Override
     public String toString() {
         return "SubTask{" +
-                "master=" + master +
+                "master='" + master.getName() + "',\n" +
                 super.toString() +
-                '}';
+                "}";
     }
+
+
 }
