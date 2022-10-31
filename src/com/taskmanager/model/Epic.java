@@ -2,7 +2,7 @@ package com.taskmanager.model;
 
 import java.util.ArrayList;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private ArrayList<SubTask> subTasks;
 
     public Epic(String name, String description, Integer id) {
@@ -15,18 +15,30 @@ public class Epic extends Task{
     }
 
     public void addSubTask(SubTask subTask) {
-        this.subTasks.add(subTask);
+        if (subTasks.contains(subTask)) {
+            int index = subTasks.indexOf(subTask);
+            this.subTasks.set(index, subTask);
+        } else
+            this.subTasks.add(subTask);
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                super.toString() + ", \n"+
+                super.toString() + ", \n" +
                 "subTasks=" + subTasks.toString() +
                 '}';
     }
 
-    public void checkSubtasksStatus(){
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Epic epic = (Epic) o;
+        return super.equals(epic) && this.subTasks.equals(epic.subTasks);
+    }
+
+    public void checkSubtasksStatus() {
         int countNew = 0;
         int countDone = 0;
         for (SubTask subTask : subTasks) {

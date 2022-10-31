@@ -8,6 +8,7 @@ public class SubTask extends Task{
         master = newMaster;
     }
 
+
     public Epic getMaster() {
         return master;
     }
@@ -23,9 +24,17 @@ public class SubTask extends Task{
                 super.toString() +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubTask subTask = (SubTask) o;
+        return super.equals(subTask) && this.master.equals(subTask.master);
+    }
+
     public void setStatus(Status status){
         super.setStatus(status);
-        master.checkSubtasksStatus();
     }
 
 }

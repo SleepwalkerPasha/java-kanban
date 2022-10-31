@@ -50,7 +50,7 @@ public class Manager {
         return countOfTasks;
     }
 
-    public void updateTask(Task task){
+    public void updateTask(Task task) {
         if (task.getClass().equals(Task.class)){
             if (regularTasks.containsKey(task.getId()))
                 regularTasks.put(task.getId(), task);
@@ -60,8 +60,11 @@ public class Manager {
                 epicTasks.put(epic.getId(), epic);
         }else if (task.getClass().equals(SubTask.class)){
             SubTask sTask = (SubTask) task;
-            if (subTasks.containsKey(sTask.getId()))
+            if (subTasks.containsKey(sTask.getId())){
                 subTasks.put(sTask.getId(), sTask);
+                sTask.getMaster().addSubTask(sTask);
+                sTask.getMaster().checkSubtasksStatus();
+            }
         }
     }
 

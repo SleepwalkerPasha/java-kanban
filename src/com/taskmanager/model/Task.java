@@ -1,6 +1,5 @@
 package com.taskmanager.model;
 
-import java.util.Objects;
 
 public class Task {
     private String name;
@@ -13,6 +12,13 @@ public class Task {
         this.description = description;
         this.id = id;
         this.status = Status.NEW;
+    }
+
+    public Task(String name, String description, Integer id, Status status) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
     }
 
     public String getName() {
@@ -43,7 +49,7 @@ public class Task {
         return status;
     }
 
-    public void setStatus(Status status) {
+    protected void setStatus(Status status) {
         this.status = status;
     }
 
@@ -62,7 +68,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return name.equals(task.name) && description.equals(task.description) && status == task.status;
+        return name.equals(task.name) && description.equals(task.description);
     }
 
     @Override
