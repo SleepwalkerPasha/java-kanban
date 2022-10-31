@@ -19,10 +19,13 @@ public class SubTask extends Task{
     @Override
     public String toString() {
         return "SubTask{" +
-                "master='" + master.getName() + "',\n" +
+                "master='" + master.getName() + ", " +
                 super.toString() +
                 "}";
     }
-
+    public void setStatus(Status status){
+        super.setStatus(status);
+        master.checkSubtasksStatus();
+    }
 
 }

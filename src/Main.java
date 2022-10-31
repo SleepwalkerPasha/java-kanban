@@ -1,4 +1,5 @@
 import com.taskmanager.model.Epic;
+import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 import com.taskmanager.service.Manager;
@@ -22,16 +23,35 @@ public class Main {
 
         epicWith2SubTasks.addSubTask(firstSubtask);
         epicWith2SubTasks.addSubTask(secondSubtask);
-        manager.createTask(new Task("Почистить обувь", "Почисти обувь к приходу мамы домой",
-                manager.getCountOfTasks()));
-        manager.createTask(new Task("Приготовить еду", "Папа попросил приготовить ужин по его любимому " +
-                "рецепту, сделай это до его прихода", manager.getCountOfTasks()));
+        Task firstRegularTask = new Task("Почистить обувь", "Почисти обувь к приходу мамы домой",
+                manager.getCountOfTasks());
+        manager.createTask(firstRegularTask);
+        Task secondRegularTask = new Task("Приготовить еду", "Папа попросил приготовить ужин по его любимому " +
+                "рецепту, сделай это до его прихода", manager.getCountOfTasks());
+        manager.createTask(secondRegularTask);
 
 
         System.out.println(manager.getEpicTasks() + "\n");
         System.out.println(manager.getRegularTasks() + "\n");
-        System.out.println(manager.getSubTasks());
+        System.out.println(manager.getSubTasks() + "\n");
+        System.out.println("Изменение объектов:");
+        firstRegularTask.setStatus(Status.IN_PROGRESS);
+        secondRegularTask.setStatus(Status.DONE);
+        firstSubtask.setStatus(Status.IN_PROGRESS);
+        System.out.println("firstRegularTask.Status = " + firstRegularTask.getStatus());
+        System.out.println("secondRegularTask.Status = " + secondRegularTask.getStatus());
+        System.out.println("firstSubtask.Status = " + firstSubtask.getStatus());
+        firstSubtask.setStatus(Status.DONE);
+        secondSubtask.setStatus(Status.DONE);
+        System.out.println("firstSubtask.Status = " + firstSubtask.getStatus());
+        System.out.println("secondSubtask.Status = " + secondSubtask.getStatus());
+        System.out.println("epicWith2SubTasks.Status = " + epicWith2SubTasks.getStatus());
 
-        // todo: изменить статусы созданного объекта, проверить подзадачи в эпике
+        manager.removeById(firstRegularTask.getId());
+        manager.removeById(epicWith2SubTasks.getId());
+        System.out.println("Удаление некоторых задач");
+        System.out.println(manager.getRegularTasks()); // стало на одну задачу меньше
+        System.out.println(manager.getEpicTasks()); // мы удалили все эпики, что были в Map поэтому он вывел пустой
+
     }
 }

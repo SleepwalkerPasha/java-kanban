@@ -21,7 +21,7 @@ public class Epic extends Task{
     @Override
     public String toString() {
         return "Epic{" +
-                super.toString() + ",\n" +
+                super.toString() + ", \n"+
                 "subTasks=" + subTasks.toString() +
                 '}';
     }
