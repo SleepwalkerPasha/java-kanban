@@ -1,26 +1,26 @@
 package com.taskmanager.model;
 
 public class SubTask extends Task{
-    private Epic master;
+    private Integer masterId;
 
-    public SubTask(String name, String description, Integer id, Epic newMaster) {
+    public SubTask(String name, String description, Integer id, Integer newMasterId) {
         super(name, description, id);
-        master = newMaster;
+        masterId = newMasterId;
     }
 
 
-    public Epic getMaster() {
-        return master;
+    public Integer getMaster() {
+        return masterId;
     }
 
-    public void setMaster(Epic master) {
-        this.master = master;
+    public void setMaster(Integer masterId) {
+        this.masterId = masterId;
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "master='" + master.getName() + ", " +
+                "master='" + masterId + ", " +
                 super.toString() +
                 "}";
     }
@@ -30,7 +30,7 @@ public class SubTask extends Task{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubTask subTask = (SubTask) o;
-        return super.equals(subTask) && this.master.equals(subTask.master);
+        return super.equals(subTask) && this.masterId.equals(subTask.masterId);
     }
 
     public void setStatus(Status status){

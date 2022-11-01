@@ -42,7 +42,7 @@ public class Manager {
         return epicTasks;
     }
 
-    public HashMap<Integer, SubTask> getSubTasks(){
+    public HashMap<Integer, SubTask> getSubtasks(){
         return subTasks;
     }
 
@@ -51,42 +51,11 @@ public class Manager {
     }
 
     public void updateTask(Task task) {
-        if (task.getClass().equals(Task.class)){
-            if (regularTasks.containsKey(task.getId()))
-                regularTasks.put(task.getId(), task);
-        }else if (task.getClass().equals(Epic.class)){
-            Epic epic = (Epic) task;
-            if (epicTasks.containsKey(epic.getId()))
-                epicTasks.put(epic.getId(), epic);
-        }else if (task.getClass().equals(SubTask.class)){
-            SubTask sTask = (SubTask) task;
-            if (subTasks.containsKey(sTask.getId())){
-                subTasks.put(sTask.getId(), sTask);
-                sTask.getMaster().addSubTask(sTask);
-                sTask.getMaster().checkSubtasksStatus();
-            }
-        }
+
     }
 
     public void createTask(Task task){
-        if (task.getClass().equals(Task.class)){
-            if (!regularTasks.containsKey(task.getId())){
-                regularTasks.put(task.getId(), task);
-                countOfTasks++;
-            }
-        }else if (task.getClass().equals(Epic.class)){
-            if (!epicTasks.containsKey(task.getId())){
-                Epic epic = (Epic) task;
-                epicTasks.put(epic.getId(), epic);
-                countOfTasks++;
-            }
-        }else if (task.getClass().equals(SubTask.class)){
-            if (!subTasks.containsKey(task.getId())){
-                SubTask sTask = (SubTask) task;
-                subTasks.put(sTask.getId(), sTask);
-                countOfTasks++;
-            }
-        }
+
     }
 
     public void removeAllTasks(){
@@ -95,10 +64,10 @@ public class Manager {
 
     public void removeAllEpicTasks(){
         epicTasks.clear();
-        removeAllSubTasks();
+        removeAllSubtasks();
     }
 
-    public void removeAllSubTasks(){
+    public void removeAllSubtasks(){
         subTasks.clear();
     }
 
@@ -111,10 +80,8 @@ public class Manager {
             subTasks.remove(id);
     }
 
-    public ArrayList<SubTask> subTasksOfEpicTask(Integer id){
-        if (epicTasks.containsKey(id))
-            return epicTasks.get(id).getSubTasks();
-        else
-            return null;
+    public ArrayList<Integer> subTasksIdsOfEpicTask(Integer id){
+        ArrayList<Integer> ids = epicTasks.get(id).getSubTasksIds();
+        return ids;
     }
 }

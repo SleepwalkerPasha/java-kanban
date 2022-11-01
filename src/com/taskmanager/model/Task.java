@@ -68,7 +68,8 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return name.equals(task.name) && description.equals(task.description);
+        return name.equals(task.name) && description.equals(task.description)
+                && id.equals(task.id) && status.equals(task.status);
     }
 
     @Override
@@ -80,6 +81,8 @@ public class Task {
             hash += 31 * description.hashCode();
         if (status != null)
             hash += 11 * status.hashCode();
+        if (id != null)
+            hash += 13 * id;
         return hash;
     }
 

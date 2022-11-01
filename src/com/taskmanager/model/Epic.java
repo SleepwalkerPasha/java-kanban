@@ -3,30 +3,30 @@ package com.taskmanager.model;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<SubTask> subTasks;
+    private ArrayList<Integer> subTasksIds;
 
     public Epic(String name, String description, Integer id) {
         super(name, description, id);
-        subTasks = new ArrayList<>();
+        subTasksIds = new ArrayList<>();
     }
 
-    public ArrayList<SubTask> getSubTasks() {
-        return subTasks;
+    public ArrayList<Integer> getSubTasksIds() {
+        return subTasksIds;
     }
 
-    public void addSubTask(SubTask subTask) {
-        if (subTasks.contains(subTask)) {
-            int index = subTasks.indexOf(subTask);
-            this.subTasks.set(index, subTask);
-        } else
-            this.subTasks.add(subTask);
+    public void addSubtaskId(Integer subTaskId) {
+        int index = subTasksIds.indexOf(subTaskId);
+        if (index != -1)
+            this.subTasksIds.set(index, subTaskId);
+        else
+            this.subTasksIds.add(subTaskId);
     }
 
     @Override
     public String toString() {
         return "Epic{" +
                 super.toString() + ", \n" +
-                "subTasks=" + subTasks.toString() +
+                "subTasksIds=" + subTasksIds.toString() +
                 '}';
     }
 
@@ -35,23 +35,23 @@ public class Epic extends Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Epic epic = (Epic) o;
-        return super.equals(epic) && this.subTasks.equals(epic.subTasks);
+        return super.equals(epic) && this.subTasksIds.equals(epic.subTasksIds);
     }
 
-    public void checkSubtasksStatus() {
-        int countNew = 0;
-        int countDone = 0;
-        for (SubTask subTask : subTasks) {
-            if (subTask.getStatus() == Status.NEW)
-                countNew++;
-            else if (subTask.getStatus() == Status.DONE)
-                countDone++;
-        }
-        if (countNew == subTasks.size())
-            setStatus(Status.NEW); // epic task must be NEW cause all subtasks is new
-        else if (countDone == subTasks.size())
-            setStatus(Status.DONE);// epic task must be DONE cause all subtasks in DONE
-        else
-            setStatus(Status.IN_PROGRESS);
-    }
+//    public void checkSubtasksIdsStatus() {
+//        int countNew = 0;
+//        int countDone = 0;
+//        for (Integer id : subTasksIds) {
+//            if (subTask.getStatus() == Status.NEW)
+//                countNew++;
+//            else if (subTask.getStatus() == Status.DONE)
+//                countDone++;
+//        }
+//        if (countNew == subTasksIds.size())
+//            setStatus(Status.NEW); // epic task must be NEW cause all subTasksIds is new
+//        else if (countDone == subTasksIds.size())
+//            setStatus(Status.DONE);// epic task must be DONE cause all subTasksIds in DONE
+//        else
+//            setStatus(Status.IN_PROGRESS);
+//    }
 }
