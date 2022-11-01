@@ -1,6 +1,6 @@
 package com.taskmanager.model;
 
-public class SubTask extends Task{
+public class SubTask extends Task {
     private Integer masterId;
 
     public SubTask(String name, String description, Integer newMasterId) {
@@ -30,7 +30,7 @@ public class SubTask extends Task{
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubTask subTask = (SubTask) o;
