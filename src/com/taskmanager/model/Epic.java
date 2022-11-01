@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private ArrayList<Integer> subTasksIds;
 
-    public Epic(String name, String description, Integer id) {
-        super(name, description, id);
+    public Epic(String name, String description) {
+        super(name, description);
         subTasksIds = new ArrayList<>();
     }
 
@@ -38,20 +38,4 @@ public class Epic extends Task {
         return super.equals(epic) && this.subTasksIds.equals(epic.subTasksIds);
     }
 
-//    public void checkSubtasksIdsStatus() {
-//        int countNew = 0;
-//        int countDone = 0;
-//        for (Integer id : subTasksIds) {
-//            if (subTask.getStatus() == Status.NEW)
-//                countNew++;
-//            else if (subTask.getStatus() == Status.DONE)
-//                countDone++;
-//        }
-//        if (countNew == subTasksIds.size())
-//            setStatus(Status.NEW); // epic task must be NEW cause all subTasksIds is new
-//        else if (countDone == subTasksIds.size())
-//            setStatus(Status.DONE);// epic task must be DONE cause all subTasksIds in DONE
-//        else
-//            setStatus(Status.IN_PROGRESS);
-//    }
 }

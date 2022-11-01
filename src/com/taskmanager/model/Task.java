@@ -1,6 +1,5 @@
 package com.taskmanager.model;
 
-
 public class Task {
     private String name;
     private String description;
@@ -14,11 +13,17 @@ public class Task {
         this.status = Status.NEW;
     }
 
-    public Task(String name, String description, Integer id, Status status) {
+    public Task(String name, String description, Status status, Integer id) {
         this.name = name;
         this.description = description;
-        this.id = id;
         this.status = status;
+        this.id = id;
+    }
+
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.status = Status.NEW;
     }
 
     public String getName() {
@@ -49,7 +54,7 @@ public class Task {
         return status;
     }
 
-    protected void setStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -76,13 +81,16 @@ public class Task {
     public int hashCode() {
         int hash = 17;
         if (name != null)
-            hash *= name.hashCode();
+            hash += name.hashCode();
+        hash *= 31;
         if (description != null)
-            hash += 31 * description.hashCode();
+            hash += description.hashCode();
+        hash *= 11;
         if (status != null)
-            hash += 11 * status.hashCode();
+            hash += status.hashCode();
+        hash *= 13;
         if (id != null)
-            hash += 13 * id;
+            hash += id;
         return hash;
     }
 

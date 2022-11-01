@@ -9,61 +9,44 @@ public class Main {
     public static void main(String[] args) {
         Manager manager = new Manager();
 
-//        Epic epicWith2subTasksIds = new Epic("Переезд", "Подготовь все к переезду",
-//                manager.getCountOfTasks());
-//        manager.createTask(epicWith2subTasksIds);
-//
-//        SubTask firstSubtask = new SubTask("Собрать вещи в коробку",
-//                "Складируй одежду и обусь в коробки",
-//                manager.getCountOfTasks(), epicWith2subTasksIds);
-//        manager.createTask(firstSubtask);
-//
-//        SubTask secondSubtask = new SubTask("Подготовить машину к переезду",
-//                "Заправь машину и складируй в нее вещи",
-//                manager.getCountOfTasks(), epicWith2subTasksIds);
-//        manager.createTask(secondSubtask);
-//
-//        epicWith2subTasksIds.addSubTask(firstSubtask);
-//        epicWith2subTasksIds.addSubTask(secondSubtask);
-//        Task firstRegularTask = new Task("Почистить обувь", "Почисти обувь к приходу мамы домой",
-//                manager.getCountOfTasks());
-//        manager.createTask(firstRegularTask);
-//        Task secondRegularTask = new Task("Приготовить еду",
-//                "Папа попросил приготовить ужин по его любимому рецепту, сделай это до его прихода",
-//                manager.getCountOfTasks());
-//        manager.createTask(secondRegularTask);
-//        System.out.println(manager.getEpicTasks() + "\n");
-//        System.out.println(manager.getRegularTasks() + "\n");
-//        System.out.println(manager.getsubTasksIds() + "\n");
-//
-//        System.out.println("Изменение объектов:");
-//
-//        manager.updateTask(new Task(firstRegularTask.getName(), firstRegularTask.getDescription(),
-//                firstRegularTask.getId(),
-//                Status.DONE));
-//
-//        System.out.println(manager.getRegularTasks() + "\n");
-//
-//        SubTask newFirstSubTask = new SubTask(firstSubtask.getName(), firstSubtask.getDescription(),
-//                firstSubtask.getId(),
-//                firstSubtask.getMaster());
-//        newFirstSubTask.setStatus(Status.DONE);
-//        manager.updateTask(newFirstSubTask);
-//        System.out.println(manager.getEpicTasks() + "\n");
-//
-//        SubTask newSecondSubtask = new SubTask(secondSubtask.getName(), secondSubtask.getDescription(),
-//                secondSubtask.getId(),
-//                secondSubtask.getMaster());
-//        newSecondSubtask.setStatus(Status.DONE);
-//        manager.updateTask(newSecondSubtask);
-//        System.out.println(manager.getEpicTasks() + "\n");
-//
-//        System.out.println("Удаление некоторых задач");
-//
-//        manager.removeById(firstRegularTask.getId());
-//        manager.removeById(epicWith2subTasksIds.getId());
-//        System.out.println(manager.getRegularTasks()); // стало на одну задачу меньше
-//        System.out.println(manager.getEpicTasks()); // мы удалили все эпики, что были в Map поэтому он вывел пустой
+        int epicId = manager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду"));
+
+        int subTask1Id = manager.createNewSubtask(new SubTask("Собрать вещи в коробку",
+                "Складируй одежду и обусь в коробки", epicId));
+        int subTask2Id = manager.createNewSubtask(new SubTask("Подготовить машину к переезду",
+                "Заправь машину и складируй в нее вещи", epicId));
+        int regularTask1Id = manager.createNewTask(new Task("Почистить обувь", "Почисти обувь к приходу мамы домой"));
+
+        int regularTask2Id = manager.createNewTask(new Task("Приготовить еду",
+                "Папа попросил приготовить ужин по его любимому рецепту, сделай это до его прихода"));
+
+        System.out.println(manager.getRegularTasks() + "\n");
+        System.out.println(manager.getEpicTasks() + "\n");
+        System.out.println(manager.getSubtasks() + "\n");
+
+        System.out.println("Изменение объектов:");
+        manager.updateTask(new Task("Сходить в магазин", "Сходить в магазин до обеда для скидки",
+                regularTask1Id));
+
+        manager.updateSubtask(new SubTask("Собрать вещи в коробку",
+                "Складируй одежду и обусь в коробки", Status.DONE, subTask1Id, epicId));
+
+        System.out.println(manager.getRegularTasks() + "\n");
+        System.out.println(manager.getEpicTasks() + "\n");
+        System.out.println(manager.getSubtasks() + "\n");
+
+        manager.updateSubtask(new SubTask("Подготовить машину к переезду",
+                "Заправь машину и складируй в нее вещи", Status.DONE, subTask2Id, epicId));
+
+        System.out.println(manager.getEpicTasks() + "\n");
+        System.out.println(manager.getSubtasks() + "\n");
+
+        System.out.println("Удаление некоторых задач");
+
+        manager.removeById(regularTask2Id);
+        manager.removeById(epicId);
+        System.out.println(manager.getRegularTasks()); // стало на одну задачу меньше
+        System.out.println(manager.getEpicTasks()); // мы удалили все эпики, что были в Map поэтому он вывел пустой
 
     }
 }
