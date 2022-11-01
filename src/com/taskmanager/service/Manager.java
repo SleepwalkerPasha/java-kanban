@@ -36,7 +36,6 @@ public class Manager {
     }
 
     public HashMap<Integer, Task> getRegularTasks() {
-
         return regularTasks;
     }
 
@@ -46,15 +45,6 @@ public class Manager {
 
     public HashMap<Integer, SubTask> getSubtasks() {
         return subTasks;
-    }
-
-    public ArrayList<SubTask> getEpicSubtask(int id) {
-        ArrayList<SubTask> epicSubTasks = new ArrayList<>();
-        for (SubTask value : subTasks.values()) {
-            if (value.getMasterId() == id)
-                epicSubTasks.add(value);
-        }
-        return epicSubTasks;
     }
 
     public int getCountOfTasks() {
@@ -149,8 +139,4 @@ public class Manager {
             subTasks.remove(id);
     }
 
-    public ArrayList<Integer> subTasksIdsOfEpicTask(Integer id) {
-        ArrayList<Integer> ids = epicTasks.get(id).getSubTasksIds();
-        return ids;
-    }
 }
