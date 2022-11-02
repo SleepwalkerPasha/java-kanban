@@ -1,5 +1,7 @@
 package com.taskmanager.model;
 
+import java.util.Objects;
+
 public class Task {
     private String name;
     private String description;
@@ -73,10 +75,10 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        if (task.name == null || task.description == null || task.id == null || status == null)
-            return false;// недобавил проверку на null, поэтому и вылетает NullPointerException
-        return name.equals(task.name) && description.equals(task.description)
-                && id.equals(task.id) && status.equals(task.status);
+
+        // недобавил проверку на null, поэтому и вылетает NullPointerException
+        return Objects.equals(name, task.name) && Objects.equals(description, task.description)
+                && Objects.equals(id, task.id) && Objects.equals(status, task.status);
     }
 
     @Override

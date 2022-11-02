@@ -41,12 +41,21 @@ public class Main {
         System.out.println(manager.getEpicTasks() + "\n");
         System.out.println(manager.getSubtasks() + "\n");
 
+        manager.updateSubtask(new SubTask("Подготовить машину к переезду",
+                "Заправь машину и складируй в нее вещи", Status.NEW, subTask2Id, epicId));
+
+        System.out.println(manager.getEpicTasks() + "\n");
+
         System.out.println("Удаление некоторых задач");
 
-        manager.removeById(regularTask1Id);
-        manager.removeById(epicId);
-        System.out.println(manager.getRegularTasks());
-        System.out.println(manager.getEpicTasks());
+        manager.removeTaskById(regularTask1Id);
+
+        manager.removeSubtaskById(subTask2Id);
+        manager.removeEpicById(epicId);
+
+        System.out.println(manager.getRegularTasks() + "\n");
+        System.out.println(manager.getSubtasks() + "\n");
+        System.out.println(manager.getEpicTasks() + "\n");
 
     }
 }

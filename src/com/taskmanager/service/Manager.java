@@ -8,6 +8,7 @@ import com.taskmanager.model.Task;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.function.IntBinaryOperator;
 
 public class Manager {
 
@@ -27,21 +28,15 @@ public class Manager {
     }
 
     public Task getTaskById(Integer id) { // методы для каждого типа задач
-        if (regularTasks.containsKey(id))   // Ответ на вопрос: если у каждого класса задач будет свой счетчик, то старый метод
-            return regularTasks.get(id);    // мог найти несколько соответствий для одного id и выбросил бы первое совпадение
-        return null;
+        return regularTasks.get(id);
     }
 
     public SubTask getSubtaskById(Integer id){
-        if (subTasks.containsKey(id))
-            return subTasks.get(id);
-        return null;
+        return subTasks.get(id);
     }
 
     public Epic getEpicById(Integer id){
-        if (epicTasks.containsKey(id))
-            return epicTasks.get(id);
-        return null;
+        return epicTasks.get(id);
     }
 
     public ArrayList<Task> getRegularTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
@@ -90,6 +85,10 @@ public class Manager {
 
     private void updateEpicStatus(Epic epic) {
         ArrayList<Integer> tasks = epic.getSubTasksIds();
+        if (tasks.isEmpty()){
+            epic.setStatus(Status.NEW);
+            return;
+        }
         int countNew = 0;
         int countDone = 0;
         for (Integer id : tasks) {
@@ -136,25 +135,49 @@ public class Manager {
     }
 
     public void removeAllTasks() {
-        regularTasks.clear();
+        if (!regularTasks.isEmpty())
+            regularTasks.clear();
     }
 
     public void removeAllEpicTasks() {
-        epicTasks.clear();
-        removeAllSubtasks();
+        if (!epicTasks.isEmpty()){
+            epicTasks.clear();
+            removeAllSubtasks();
+        }
     }
 
     public void removeAllSubtasks() {
-        subTasks.clear();
+        for (SubTask value : subTasks.values()) {
+            Epic epic = getEpicById(value.getMasterId());
+            if (epic == null)
+                return;
+            epic.getSubTasksIds().clear();
+            updateEpicStatus(epic);
+        }
+        if (!subTasks.isEmpty())
+            subTasks.clear();
     }
 
-    public void removeById(Integer id) {
-        if (regularTasks.containsKey(id))
-            regularTasks.remove(id);
-        else if (epicTasks.containsKey(id))
-            epicTasks.remove(id);
-        else if (subTasks.containsKey(id))
-            subTasks.remove(id);
+    public void removeTaskById(Integer id) {
+        regularTasks.remove(id);
     }
-
+    public void removeSubtaskById(Integer id) {
+        SubTask subTask = getSubtaskById(id);
+        if (subTask == null)
+            return;
+        Epic epic = getEpicById(subTask.getMasterId());
+        epic.getSubTasksIds().remove(id);
+        updateEpicStatus(epic);
+        subTasks.remove(id);
+    }
+    public void removeEpicById(Integer id) {
+        Epic epic = getEpicById(id);
+        if (epic == null)
+            return;
+        ArrayList<Integer> epicsSubtasksIds = epic.getSubTasksIds();
+        for (Integer index : epicsSubtasksIds) {
+            subTasks.remove(index);
+        }
+        epicTasks.remove(id);
+    }
 }

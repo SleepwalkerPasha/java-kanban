@@ -1,5 +1,7 @@
 package com.taskmanager.model;
 
+import java.util.Objects;
+
 public class SubTask extends Task {
     private Integer masterId;
 
@@ -34,9 +36,7 @@ public class SubTask extends Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubTask subTask = (SubTask) o;
-        if (subTask.masterId == null)
-            return false;
-        return super.equals(subTask) && this.masterId.equals(subTask.masterId);
+        return super.equals(subTask) && Objects.equals(masterId, subTask.masterId);
     }
 
 }
