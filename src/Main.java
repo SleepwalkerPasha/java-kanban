@@ -42,15 +42,20 @@ public class Main {
         System.out.println(manager.getSubtasks() + "\n");
 
         manager.updateSubtask(new SubTask("Подготовить машину к переезду",
-                "Заправь машину и складируй в нее вещи", Status.NEW, subTask2Id, epicId));
+                "Заправь машину и складируй в нее вещи", Status.IN_PROGRESS, subTask2Id, epicId));
+        manager.updateSubtask(new SubTask("Собрать вещи в коробку",
+                "Складируй одежду и обусь в коробки", Status.IN_PROGRESS, subTask1Id, epicId));
 
         System.out.println(manager.getEpicTasks() + "\n");
+        System.out.println(manager.getSubtasks() + "\n");
 
         System.out.println("Удаление некоторых задач");
 
         manager.removeTaskById(regularTask1Id);
 
         manager.removeSubtaskById(subTask2Id);
+        System.out.println(manager.getSubtasks() + "\n");
+
         manager.removeEpicById(epicId);
 
         System.out.println(manager.getRegularTasks() + "\n");

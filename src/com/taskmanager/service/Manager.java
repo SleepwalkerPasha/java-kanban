@@ -150,7 +150,7 @@ public class Manager {
         for (SubTask value : subTasks.values()) {
             Epic epic = getEpicById(value.getMasterId());
             if (epic == null)
-                return;
+                break;
             epic.getSubTasksIds().clear();
             updateEpicStatus(epic);
         }
