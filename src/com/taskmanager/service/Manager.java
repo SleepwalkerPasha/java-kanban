@@ -6,6 +6,7 @@ import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Manager {
@@ -25,26 +26,34 @@ public class Manager {
         countOfTasks = 0;
     }
 
-    public Task getTaskById(Integer id) {
-        if (regularTasks.containsKey(id))
-            return regularTasks.get(id);
-        else if (epicTasks.containsKey(id))
-            return epicTasks.get(id);
-        else if (subTasks.containsKey(id))
+    public Task getTaskById(Integer id) { // методы для каждого типа задач
+        if (regularTasks.containsKey(id))   // Ответ на вопрос: если у каждого класса задач будет свой счетчик, то старый метод
+            return regularTasks.get(id);    // мог найти несколько соответствий для одного id и выбросил бы первое совпадение
+        return null;
+    }
+
+    public SubTask getSubtaskById(Integer id){
+        if (subTasks.containsKey(id))
             return subTasks.get(id);
         return null;
     }
 
-    public HashMap<Integer, Task> getRegularTasks() {
-        return regularTasks;
+    public Epic getEpicById(Integer id){
+        if (epicTasks.containsKey(id))
+            return epicTasks.get(id);
+        return null;
     }
 
-    public HashMap<Integer, Epic> getEpicTasks() {
-        return epicTasks;
+    public ArrayList<Task> getRegularTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+        return new ArrayList<>(regularTasks.values());
     }
 
-    public HashMap<Integer, SubTask> getSubtasks() {
-        return subTasks;
+    public ArrayList<Epic> getEpicTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+        return new ArrayList<>(epicTasks.values());
+    }
+
+    public ArrayList<SubTask> getSubtasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+        return new ArrayList<>(subTasks.values());
     }
 
     public int getCountOfTasks() {
@@ -53,11 +62,17 @@ public class Manager {
 
     public void updateTask(Task task) {
         int id = task.getId();
+        Task oldTask = regularTasks.get(id);
+        if (oldTask == null)
+            return;
         regularTasks.put(id, task);
     }
 
     public void updateEpic(Epic epic) {
         int id = epic.getId();
+        Epic oldEpic = epicTasks.get(id);
+        if (oldEpic == null)
+            return;
         epicTasks.put(id, epic);
     }
 
@@ -77,10 +92,13 @@ public class Manager {
         ArrayList<Integer> tasks = epic.getSubTasksIds();
         int countNew = 0;
         int countDone = 0;
-        for (Integer task : tasks) {
-            if (subTasks.get(task).getStatus() == Status.DONE)
+        for (Integer id : tasks) {
+            SubTask subTask = subTasks.get(id);
+            if (subTask == null)
+                return;
+            if (subTask.getStatus() == Status.DONE)
                 countDone++;
-            else if (subTasks.get(task).getStatus() == Status.NEW)
+            else if (subTask.getStatus() == Status.NEW)
                 countNew++;
         }
         if (countNew == tasks.size())

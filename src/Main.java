@@ -43,10 +43,10 @@ public class Main {
 
         System.out.println("Удаление некоторых задач");
 
-        manager.removeById(regularTask2Id);
+        manager.removeById(regularTask1Id);
         manager.removeById(epicId);
-        System.out.println(manager.getRegularTasks()); // стало на одну задачу меньше
-        System.out.println(manager.getEpicTasks()); // мы удалили все эпики, что были в Map поэтому он вывел пустой
+        System.out.println(manager.getRegularTasks());
+        System.out.println(manager.getEpicTasks());
 
     }
 }
