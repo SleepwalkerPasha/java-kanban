@@ -8,6 +8,7 @@ import com.taskmanager.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements ITaskManager {
 
@@ -19,26 +20,35 @@ public class InMemoryTaskManager implements ITaskManager {
 
     private HashMap<Integer, SubTask> subTasks;
 
+    private List<Task> listOfTasks;
+
     public InMemoryTaskManager() {
         this.regularTasks = new HashMap<>();
         this.epicTasks = new HashMap<>();
         this.subTasks = new HashMap<>();
+        listOfTasks = new ArrayList<>(10);
         countOfTasks = 0;
     }
 
     @Override
     public Task getTaskById(Integer id) {
-        return regularTasks.get(id);
+        Task task = regularTasks.get(id);
+        listOfTasks.add(task);
+        return task;
     }
 
     @Override
     public SubTask getSubtaskById(Integer id) {
-        return subTasks.get(id);
+        SubTask task = subTasks.get(id);
+        listOfTasks.add(task);
+        return task;
     }
 
     @Override
     public Epic getEpicById(Integer id) {
-        return epicTasks.get(id);
+        Epic task = epicTasks.get(id);
+        listOfTasks.add(task);
+        return task;
     }
 
     @Override
@@ -198,5 +208,10 @@ public class InMemoryTaskManager implements ITaskManager {
             subTasks.remove(index);
         }
         epicTasks.remove(id);
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return listOfTasks;
     }
 }
