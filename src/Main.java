@@ -2,12 +2,12 @@ import com.taskmanager.model.Epic;
 import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
-import com.taskmanager.service.Manager;
+import com.taskmanager.service.InMemoryTaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
-        Manager manager = new Manager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
 
         int epicId = manager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду"));
 

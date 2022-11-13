@@ -1,16 +1,15 @@
 package com.taskmanager.service;
 
+import com.taskmanager.interfaces.ITaskManager;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.function.IntBinaryOperator;
 
-public class Manager {
+public class InMemoryTaskManager implements ITaskManager {
 
     private int countOfTasks;
 
@@ -20,33 +19,39 @@ public class Manager {
 
     private HashMap<Integer, SubTask> subTasks;
 
-    public Manager() {
+    public InMemoryTaskManager() {
         this.regularTasks = new HashMap<>();
         this.epicTasks = new HashMap<>();
         this.subTasks = new HashMap<>();
         countOfTasks = 0;
     }
 
-    public Task getTaskById(Integer id) { // методы для каждого типа задач
+    @Override
+    public Task getTaskById(Integer id) {
         return regularTasks.get(id);
     }
 
-    public SubTask getSubtaskById(Integer id){
+    @Override
+    public SubTask getSubtaskById(Integer id) {
         return subTasks.get(id);
     }
 
-    public Epic getEpicById(Integer id){
+    @Override
+    public Epic getEpicById(Integer id) {
         return epicTasks.get(id);
     }
 
+    @Override
     public ArrayList<Task> getRegularTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(regularTasks.values());
     }
 
+    @Override
     public ArrayList<Epic> getEpicTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(epicTasks.values());
     }
 
+    @Override
     public ArrayList<SubTask> getSubtasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(subTasks.values());
     }
@@ -55,6 +60,7 @@ public class Manager {
         return countOfTasks;
     }
 
+    @Override
     public void updateTask(Task task) {
         int id = task.getId();
         Task oldTask = regularTasks.get(id);
@@ -63,6 +69,7 @@ public class Manager {
         regularTasks.put(id, task);
     }
 
+    @Override
     public void updateEpic(Epic epic) {
         int id = epic.getId();
         Epic oldEpic = epicTasks.get(id);
@@ -71,6 +78,7 @@ public class Manager {
         epicTasks.put(id, epic);
     }
 
+    @Override
     public void updateSubtask(SubTask subTask) {
         int id = subTask.getId();
         SubTask oldSubtask = subTasks.get(id);
@@ -85,7 +93,7 @@ public class Manager {
 
     private void updateEpicStatus(Epic epic) {
         ArrayList<Integer> tasks = epic.getSubTasksIds();
-        if (tasks.isEmpty()){
+        if (tasks.isEmpty()) {
             epic.setStatus(Status.NEW);
             return;
         }
@@ -108,6 +116,7 @@ public class Manager {
             epic.setStatus(Status.IN_PROGRESS);
     }
 
+    @Override
     public int createNewTask(Task task) {
         int id = ++countOfTasks;
         task.setId(id);
@@ -115,6 +124,7 @@ public class Manager {
         return id;
     }
 
+    @Override
     public Integer createNewSubtask(SubTask subTask) {
         int id = ++countOfTasks;
         subTask.setId(id);
@@ -127,6 +137,7 @@ public class Manager {
         return id;
     }
 
+    @Override
     public int createNewEpic(Epic epic) {
         int id = ++countOfTasks;
         epic.setId(id);
@@ -134,18 +145,21 @@ public class Manager {
         return id;
     }
 
+    @Override
     public void removeAllTasks() {
         if (!regularTasks.isEmpty())
             regularTasks.clear();
     }
 
+    @Override
     public void removeAllEpicTasks() {
-        if (!epicTasks.isEmpty()){
+        if (!epicTasks.isEmpty()) {
             epicTasks.clear();
             removeAllSubtasks();
         }
     }
 
+    @Override
     public void removeAllSubtasks() {
         for (SubTask value : subTasks.values()) {
             Epic epic = getEpicById(value.getMasterId());
@@ -158,9 +172,12 @@ public class Manager {
             subTasks.clear();
     }
 
+    @Override
     public void removeTaskById(Integer id) {
         regularTasks.remove(id);
     }
+
+    @Override
     public void removeSubtaskById(Integer id) {
         SubTask subTask = getSubtaskById(id);
         if (subTask == null)
@@ -170,6 +187,8 @@ public class Manager {
         updateEpicStatus(epic);
         subTasks.remove(id);
     }
+
+    @Override
     public void removeEpicById(Integer id) {
         Epic epic = getEpicById(id);
         if (epic == null)
