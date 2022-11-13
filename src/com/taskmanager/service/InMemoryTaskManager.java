@@ -1,5 +1,6 @@
 package com.taskmanager.service;
 
+import com.taskmanager.interfaces.IHistoryManager;
 import com.taskmanager.interfaces.ITaskManager;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.Status;
@@ -20,34 +21,34 @@ public class InMemoryTaskManager implements ITaskManager {
 
     private HashMap<Integer, SubTask> subTasks;
 
-    private List<Task> listOfTasks;
+    private IHistoryManager historyManager;
 
     public InMemoryTaskManager() {
         this.regularTasks = new HashMap<>();
         this.epicTasks = new HashMap<>();
         this.subTasks = new HashMap<>();
-        listOfTasks = new ArrayList<>(10);
+        historyManager = Managers.getDefaultHistory();
         countOfTasks = 0;
     }
 
     @Override
     public Task getTaskById(Integer id) {
         Task task = regularTasks.get(id);
-        listOfTasks.add(task);
+        historyManager.add(task);
         return task;
     }
 
     @Override
     public SubTask getSubtaskById(Integer id) {
         SubTask task = subTasks.get(id);
-        listOfTasks.add(task);
+        historyManager.add(task);
         return task;
     }
 
     @Override
     public Epic getEpicById(Integer id) {
         Epic task = epicTasks.get(id);
-        listOfTasks.add(task);
+        historyManager.add(task);
         return task;
     }
 
@@ -212,6 +213,6 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public List<Task> getHistory() {
-        return listOfTasks;
+        return historyManager.getHistory();
     }
 }
