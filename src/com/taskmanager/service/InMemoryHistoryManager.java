@@ -3,12 +3,13 @@ package com.taskmanager.service;
 import com.taskmanager.interfaces.IHistoryManager;
 import com.taskmanager.model.Task;
 
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements IHistoryManager {
 
-    private List<Task> taskList = new ArrayList<>(10);
+    private List<Task> taskList = new LinkedList<>();
 
     public int getSize(){
         return taskList.size();

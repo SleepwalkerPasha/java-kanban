@@ -53,18 +53,28 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public ArrayList<Task> getRegularTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+    public List<Task> getRegularTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(regularTasks.values());
     }
 
     @Override
-    public ArrayList<Epic> getEpicTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+    public List<Epic> getEpicTasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(epicTasks.values());
     }
 
     @Override
-    public ArrayList<SubTask> getSubtasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
+    public List<SubTask> getSubtasks() { // изменил получения значений, вношу в массив, чтобы не получать доступ к map
         return new ArrayList<>(subTasks.values());
+    }
+
+    @Override
+    public List<SubTask> getSubtaskByEpic(Integer epicId) {
+        List<SubTask> subTaskList = new ArrayList<>();
+        for (SubTask subtask: subTasks.values()) {
+            if (subtask.getMasterId().equals(epicId))
+                subTaskList.add(subtask);
+        }
+        return subTaskList;
     }
 
     public int getCountOfTasks() {
@@ -136,12 +146,12 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public Integer createNewSubtask(SubTask subTask) {
+    public int createNewSubtask(SubTask subTask) {
         int id = ++countOfTasks;
         subTask.setId(id);
         Epic epic = epicTasks.get(subTask.getMasterId());
         if (epic == null)
-            return null;
+            return -1;
         epic.addSubtaskId(id);
         subTasks.put(id, subTask);
         updateEpicStatus(epic);
@@ -184,12 +194,12 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public void removeTaskById(Integer id) {
+    public void removeTaskById(int id) {
         regularTasks.remove(id);
     }
 
     @Override
-    public void removeSubtaskById(Integer id) {
+    public void removeSubtaskById(int id) {
         SubTask subTask = getSubtaskById(id);
         if (subTask == null)
             return;
@@ -200,7 +210,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public void removeEpicById(Integer id) {
+    public void removeEpicById(int id) {
         Epic epic = getEpicById(id);
         if (epic == null)
             return;

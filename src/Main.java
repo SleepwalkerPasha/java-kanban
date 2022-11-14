@@ -37,6 +37,6 @@ public class Main {
         System.out.println(manager.getHistory() + "\n");
         manager.getTaskById(regularTask2Id);
         System.out.println(manager.getHistory() + "\n");
-        System.out.println(manager.getHistory().size());
+        //System.out.println(manager.getHistory().size());
     }
 }
