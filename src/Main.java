@@ -1,6 +1,5 @@
 import com.taskmanager.interfaces.ITaskManager;
 import com.taskmanager.model.Epic;
-import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 import com.taskmanager.service.Managers;
@@ -39,7 +38,7 @@ public class Main {
         manager.getTaskById(regularTask2Id);
         manager.getTaskById(regularTask1Id);
         manager.getSubtaskById(subTask1Id);
-       //manager.getEpicById(epicId1);
+        //manager.getEpicById(epicId1);
         manager.getSubtaskById(subTask2Id);
         manager.getSubtaskById(subTask1Id);
         manager.getTaskById(regularTask1Id);

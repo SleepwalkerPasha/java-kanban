@@ -4,7 +4,6 @@ import com.taskmanager.interfaces.IHistoryManager;
 import com.taskmanager.model.Node;
 import com.taskmanager.model.Task;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,7 @@ public class InMemoryHistoryManager implements IHistoryManager {
 
     private CustomLinkedList taskList = new CustomLinkedList();
 
-    public int getSize(){
+    public int getSize() {
         return taskList.size();
     }
 
@@ -37,7 +36,7 @@ public class InMemoryHistoryManager implements IHistoryManager {
         taskList.map.remove(id);
     }
 
-     private class CustomLinkedList {
+    private class CustomLinkedList {
         private Node<Task> head;
 
         private Node<Task> tail;
@@ -45,6 +44,7 @@ public class InMemoryHistoryManager implements IHistoryManager {
         private HashMap<Integer, Node<Task>> map = new HashMap<>();
 
         private int size = 0;
+
         public void linkLast(Task task) {
             if (map.containsKey(task.getId())) {
                 removeNode(map.get(task.getId()));
@@ -83,6 +83,7 @@ public class InMemoryHistoryManager implements IHistoryManager {
                 node.prev.next = node.next;
             size--;
         }
+
         public int size() {
             return size;
         }

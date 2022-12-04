@@ -70,7 +70,7 @@ public class InMemoryTaskManager implements ITaskManager {
     @Override
     public List<SubTask> getSubtaskByEpic(Integer epicId) {
         List<SubTask> subTaskList = new ArrayList<>();
-        for (SubTask subtask: subTasks.values()) {
+        for (SubTask subtask : subTasks.values()) {
             if (subtask.getMasterId().equals(epicId))
                 subTaskList.add(subtask);
         }

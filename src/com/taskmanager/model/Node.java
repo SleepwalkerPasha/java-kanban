@@ -1,7 +1,5 @@
 package com.taskmanager.model;
 
-import java.util.Objects;
-
 public class Node<T> {
     public Node<T> prev;
 
