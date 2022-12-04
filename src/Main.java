@@ -16,27 +16,40 @@ public class Main {
                 "Складируй одежду и обусь в коробки", epicId));
         int subTask2Id = manager.createNewSubtask(new SubTask("Подготовить машину к переезду",
                 "Заправь машину и складируй в нее вещи", epicId));
+
+        int subTask3Id = manager.createNewSubtask(new SubTask("Подготовить машину к переезду",
+                "Заправь машину и складируй в нее вещи", epicId));
+
+        int epicId1 = manager.createNewEpic(new Epic("Поселение в новый дом", "Подготовить все для переселения"));
+
         int regularTask1Id = manager.createNewTask(new Task("Почистить обувь", "Почисти обувь к приходу мамы домой"));
 
         int regularTask2Id = manager.createNewTask(new Task("Приготовить еду",
                 "Папа попросил приготовить ужин по его любимому рецепту, сделай это до его прихода"));
-        manager.getTaskById(regularTask2Id);
+//        manager.getEpicById(epicId);
+//        manager.getTaskById(regularTask2Id);
+//        manager.getTaskById(regularTask1Id);
+//        manager.getSubtaskById(subTask1Id);
+//        manager.getEpicById(epicId1);
+//        manager.getSubtaskById(subTask3Id);
+//        manager.getSubtaskById(subTask2Id);
+//        System.out.println(manager.getHistory() + "\n");
+
         manager.getEpicById(epicId);
-        System.out.println(manager.getHistory() + "\n");
+        manager.getTaskById(regularTask2Id);
+        manager.getTaskById(regularTask1Id);
         manager.getSubtaskById(subTask1Id);
+       //manager.getEpicById(epicId1);
+        manager.getSubtaskById(subTask2Id);
+        manager.getSubtaskById(subTask1Id);
+        manager.getTaskById(regularTask1Id);
+        System.out.println(manager.getHistory().size());
         System.out.println(manager.getHistory() + "\n");
-        manager.getTaskById(regularTask2Id);
+        manager.removeTaskById(regularTask2Id);
+        System.out.println(manager.getHistory().size());
         System.out.println(manager.getHistory() + "\n");
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask2Id);
+        manager.removeEpicById(epicId);
+        System.out.println(manager.getHistory().size());
         System.out.println(manager.getHistory() + "\n");
-        manager.getTaskById(regularTask2Id);
-        System.out.println(manager.getHistory() + "\n");
-        //System.out.println(manager.getHistory().size());
     }
 }
