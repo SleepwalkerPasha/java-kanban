@@ -43,6 +43,8 @@ public class InMemoryHistoryManager implements IHistoryManager {
         private HashMap<Integer, Node<Task>> map = new HashMap<>();
 
         public void linkLast(Task task) {
+            if (task == null)
+                return;
             Node<Task> n = map.get(task.getId());
             if (n != null)
                 removeNode(n);

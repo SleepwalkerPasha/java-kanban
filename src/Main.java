@@ -35,25 +35,28 @@ public class Main {
 //        System.out.println(manager.getHistory() + "\n");
 
         manager.getEpicById(epicId);
-        manager.getTaskById(regularTask2Id);
-        manager.getTaskById(regularTask1Id);
-        manager.getSubtaskById(subTask1Id);
+//        manager.getTaskById(regularTask2Id);
+//        manager.getTaskById(regularTask1Id);
+//        manager.getSubtaskById(subTask1Id);
         //manager.getEpicById(epicId1);
+        manager.removeEpicById(epicId);
         manager.getSubtaskById(subTask2Id);
         manager.getSubtaskById(subTask1Id);
-        manager.getTaskById(regularTask1Id);
+        manager.getTaskById(777);
+       // manager.getTaskById(regularTask1Id);
         System.out.println(manager.getHistory().size());
-        System.out.println(manager.getHistory() + "\n");
-        manager.removeAllSubtasks();
-        //manager.removeTaskById(regularTask2Id);
-        System.out.println(manager.getHistory().size());
-        System.out.println(manager.getHistory() + "\n");
-        //manager.removeEpicById(epicId);
-        manager.removeAllEpicTasks();
-        System.out.println(manager.getHistory() + "\n");
-        System.out.println(manager.getHistory().size());
-        manager.removeAllTasks();
-        System.out.println(manager.getHistory() + "\n");
-        System.out.println(manager.getHistory().size());
+//        System.out.println(manager.getHistory() + "\n");
+//        manager.removeAllSubtasks();
+//        //manager.removeTaskById(regularTask2Id);
+//        System.out.println(manager.getHistory().size());
+//        System.out.println(manager.getHistory() + "\n");
+//        //manager.removeEpicById(epicId);
+//        manager.removeAllEpicTasks();
+//        System.out.println(manager.getHistory() + "\n");
+//        System.out.println(manager.getHistory().size());
+//        manager.removeAllTasks();
+//        System.out.println(manager.getHistory() + "\n");
+//        System.out.println(manager.getHistory().size());
+
     }
 }
