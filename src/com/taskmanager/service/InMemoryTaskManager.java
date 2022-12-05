@@ -168,29 +168,41 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void removeAllTasks() {
-        if (!regularTasks.isEmpty())
+        if (!regularTasks.isEmpty()) {
+            for (Integer taskId : regularTasks.keySet()) {
+                historyManager.remove(taskId);
+            }
             regularTasks.clear();
+        }
     }
 
     @Override
     public void removeAllEpicTasks() {
         if (!epicTasks.isEmpty()) {
-            epicTasks.clear();
+            for (Integer epicId : epicTasks.keySet()) {
+                historyManager.remove(epicId);
+            }
             removeAllSubtasks();
+            epicTasks.clear();
         }
     }
 
     @Override
     public void removeAllSubtasks() {
         for (SubTask value : subTasks.values()) {
-            Epic epic = getEpicById(value.getMasterId());
+            Epic epic = epicTasks.get(value.getMasterId());
             if (epic == null)
                 return;
-            epic.getSubTasksIds().clear();
+            List<Integer> subTasksIds = epic.getSubTasksIds();
+            subTasksIds.clear();
             updateEpicStatus(epic);
         }
-        if (!subTasks.isEmpty())
+        if (!subTasks.isEmpty()) {
+            for (Integer id : subTasks.keySet()) {
+                historyManager.remove(id);
+            }
             subTasks.clear();
+        }
     }
 
     @Override
@@ -204,7 +216,7 @@ public class InMemoryTaskManager implements ITaskManager {
         SubTask subTask = getSubtaskById(id);
         if (subTask == null)
             return;
-        Epic epic = getEpicById(subTask.getMasterId());
+        Epic epic = epicTasks.get(subTask.getMasterId());
         epic.getSubTasksIds().remove(id);
         updateEpicStatus(epic);
         subTasks.remove(id);
@@ -213,7 +225,7 @@ public class InMemoryTaskManager implements ITaskManager {
 
     @Override
     public void removeEpicById(int id) {
-        Epic epic = getEpicById(id);
+        Epic epic = epicTasks.get(id);
         if (epic == null)
             return;
         ArrayList<Integer> epicsSubtasksIds = epic.getSubTasksIds();

@@ -1,4 +1,4 @@
-package com.taskmanager.model;
+package com.taskmanager.service;
 
 public class Node<T> {
     public Node<T> prev;

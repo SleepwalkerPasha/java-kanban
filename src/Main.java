@@ -44,11 +44,16 @@ public class Main {
         manager.getTaskById(regularTask1Id);
         System.out.println(manager.getHistory().size());
         System.out.println(manager.getHistory() + "\n");
-        manager.removeTaskById(regularTask2Id);
+        manager.removeAllSubtasks();
+        //manager.removeTaskById(regularTask2Id);
         System.out.println(manager.getHistory().size());
         System.out.println(manager.getHistory() + "\n");
-        manager.removeEpicById(epicId);
-        System.out.println(manager.getHistory().size());
+        //manager.removeEpicById(epicId);
+        manager.removeAllEpicTasks();
         System.out.println(manager.getHistory() + "\n");
+        System.out.println(manager.getHistory().size());
+        manager.removeAllTasks();
+        System.out.println(manager.getHistory() + "\n");
+        System.out.println(manager.getHistory().size());
     }
 }
