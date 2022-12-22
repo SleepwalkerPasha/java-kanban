@@ -29,6 +29,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+        int maxId = 0;
         for (int i = 1; i < info.size(); i++) {
             String s = info.get(i);
             if (s.isBlank())
@@ -36,16 +37,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             Task task = manager.fromString(s);
             if (task != null) {
                 String taskString = task.toString();
+                Integer taskId = task.getId();
                 if (taskString.contains("Epic")) {
-                    manager.epicTasks.put(task.getId(), (Epic) task);
+                    manager.epicTasks.put(taskId, (Epic) task);
                 } else if (taskString.contains("SubTask")) {
-                    manager.subTasks.put(task.getId(), (SubTask) task);
+                    manager.subTasks.put(taskId, (SubTask) task);
                 } else {
-                    manager.regularTasks.put(task.getId(), task);
+                    manager.regularTasks.put(taskId, task);
                 }
-                manager.counter += task.getId();
+                if (taskId > maxId)
+                    maxId = taskId;
             }
         }
+        manager.counter = maxId;
         String historyStr = info.get(info.size() - 1);
         List<Task> tasksInHistory = manager.historyFromString(historyStr);
         for (Task task : tasksInHistory) {
@@ -253,7 +257,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 "Заправь машину и складируй в нее вещи", epic1));
         manager.getTaskById(regtaskid1);
         manager.getSubtaskById(subtask1);
-        manager.removeAllTasks();
+       // manager.removeAllTasks();
         System.out.println(manager.getHistory());
 
         FileBackedTasksManager manager1 = FileBackedTasksManager.loadFromFile(filename);
