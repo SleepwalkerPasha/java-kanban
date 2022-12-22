@@ -1,16 +1,22 @@
 package com.taskmanager.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subTasksIds;
+    private List<Integer> subTasksIds;
 
     public Epic(String name, String description) {
         super(name, description);
         subTasksIds = new ArrayList<>();
     }
 
-    public ArrayList<Integer> getSubTasksIds() {
+    public Epic(String name, String description, Status status, Integer id, List<Integer> subtasks) {
+        super(name, description, status, id);
+        subTasksIds = subtasks;
+    }
+
+    public List<Integer> getSubTasksIds() {
         return subTasksIds;
     }
 
@@ -24,10 +30,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                super.toString() + ", " +
-                "subTasksIds=" + subTasksIds.toString() +
-                '}';
+        return super.toString() + "|" + subTasksIds;
     }
 
     @Override

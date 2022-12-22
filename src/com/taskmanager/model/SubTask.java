@@ -25,10 +25,7 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return "SubTask{" +
-                "master='" + masterId + ", " +
-                super.toString() +
-                "}";
+        return super.toString() + masterId + "|";
     }
 
     @Override

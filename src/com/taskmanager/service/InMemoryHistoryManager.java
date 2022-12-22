@@ -20,8 +20,6 @@ public class InMemoryHistoryManager implements IHistoryManager {
         if (taskList.size() >= 10)
             taskList.removeNode(taskList.tail);
         taskList.linkLast(task);
-//        map.put(task.getId()
-//        taskList.add(task);
     }
 
     @Override

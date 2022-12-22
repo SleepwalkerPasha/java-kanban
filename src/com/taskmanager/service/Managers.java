@@ -8,6 +8,8 @@ public class Managers {
         return new InMemoryTaskManager();
     }
 
+    public static ITaskManager getFileBackedTaskManager(String filename) { return new FileBackedTasksManager(filename);}
+
     public static InMemoryHistoryManager getDefaultHistory(){
         return new InMemoryHistoryManager();
     }

@@ -62,12 +62,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + "', " +
-                "description='" + description + "', " +
-                "id=" + id + ", " +
-                "status=" + status +
-                "}";
+        return id + "|" + getClass().toString().substring(28) + "|" + name + "|" + status + "|" + description + "|";
     }
 
     @Override

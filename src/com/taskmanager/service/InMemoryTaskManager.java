@@ -13,13 +13,13 @@ import java.util.List;
 
 public class InMemoryTaskManager implements ITaskManager {
 
-    private int countOfTasks;
+    protected int countOfTasks;
 
-    private HashMap<Integer, Task> regularTasks;
+    protected HashMap<Integer, Task> regularTasks;
 
-    private HashMap<Integer, Epic> epicTasks;
+    protected HashMap<Integer, Epic> epicTasks;
 
-    private HashMap<Integer, SubTask> subTasks;
+    protected HashMap<Integer, SubTask> subTasks;
 
     private IHistoryManager historyManager;
 
@@ -113,7 +113,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     private void updateEpicStatus(Epic epic) {
-        ArrayList<Integer> tasks = epic.getSubTasksIds();
+        List<Integer> tasks = epic.getSubTasksIds();
         if (tasks.isEmpty()) {
             epic.setStatus(Status.NEW);
             return;
@@ -228,7 +228,7 @@ public class InMemoryTaskManager implements ITaskManager {
         Epic epic = epicTasks.get(id);
         if (epic == null)
             return;
-        ArrayList<Integer> epicsSubtasksIds = epic.getSubTasksIds();
+        List<Integer> epicsSubtasksIds = epic.getSubTasksIds();
         for (Integer index : epicsSubtasksIds) {
             subTasks.remove(index);
             historyManager.remove(index);
