@@ -3,16 +3,17 @@ package com.taskmanager.interfaces;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
+import com.taskmanager.service.ManagerSaveException;
 
 import java.util.List;
 
 public interface ITaskManager {
 
-    Task getTaskById(Integer id);
+    Task getTaskById(Integer id) throws ManagerSaveException;
 
-    SubTask getSubtaskById(Integer id);
+    SubTask getSubtaskById(Integer id) throws ManagerSaveException;
 
-    Epic getEpicById(Integer id);
+    Epic getEpicById(Integer id) throws ManagerSaveException;
 
     List<Task> getRegularTasks();
 
@@ -22,29 +23,29 @@ public interface ITaskManager {
 
     List<SubTask> getSubtaskByEpic(Integer epicId);
 
-    void updateTask(Task task);
+    void updateTask(Task task) throws ManagerSaveException;
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic) throws ManagerSaveException;
 
-    void updateSubtask(SubTask subTask);
+    void updateSubtask(SubTask subTask) throws ManagerSaveException;
 
-    int createNewTask(Task task);
+    int createNewTask(Task task) throws ManagerSaveException;
 
-    int createNewSubtask(SubTask subTask);
+    int createNewSubtask(SubTask subTask) throws ManagerSaveException;
 
-    int createNewEpic(Epic epic);
+    int createNewEpic(Epic epic) throws ManagerSaveException;
 
-    void removeAllTasks();
+    void removeAllTasks() throws ManagerSaveException;
 
-    void removeAllEpicTasks();
+    void removeAllEpicTasks() throws ManagerSaveException;
 
-    void removeAllSubtasks();
+    void removeAllSubtasks() throws ManagerSaveException;
 
-    void removeTaskById(int id);
+    void removeTaskById(int id) throws ManagerSaveException;
 
-    void removeSubtaskById(int id);
+    void removeSubtaskById(int id) throws ManagerSaveException;
 
-    void removeEpicById(int id);
+    void removeEpicById(int id) throws ManagerSaveException;
 
     List<Task> getHistory();
 }
