@@ -1,17 +1,19 @@
 package com.taskmanager.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class SubTask extends Task {
     private Integer masterId;
 
-    public SubTask(String name, String description, Integer newMasterId) {
-        super(name, description);
+    public SubTask(String name, String description, Duration duration, LocalDateTime startTime, Integer newMasterId) {
+        super(name, description, duration, startTime);
         masterId = newMasterId;
     }
 
-    public SubTask(String name, String description, Status status, Integer id, Integer newMasterId) {
-        super(name, description, status, id);
+    public SubTask(String name, String description, Status status, Integer id, Duration duration, LocalDateTime startTime, Integer newMasterId) {
+        super(name, description, status, id, duration, startTime);
         masterId = newMasterId;
     }
 

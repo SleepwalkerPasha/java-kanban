@@ -1,18 +1,22 @@
 package com.taskmanager.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
     private List<Integer> subTasksIds;
 
-    public Epic(String name, String description) {
-        super(name, description);
+    private LocalDateTime endTime;
+
+    public Epic(String name, String description, Duration duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
         subTasksIds = new ArrayList<>();
     }
 
-    public Epic(String name, String description, Status status, Integer id, List<Integer> subtasks) {
-        super(name, description, status, id);
+    public Epic(String name, String description, Status status, Integer id, Duration duration, LocalDateTime startTime, List<Integer> subtasks) {
+        super(name, description, status, id, duration, startTime);
         subTasksIds = subtasks;
     }
 
@@ -43,4 +47,12 @@ public class Epic extends Task {
         return super.equals(epic) && this.subTasksIds.equals(epic.subTasksIds);
     }
 
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 }

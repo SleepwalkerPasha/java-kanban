@@ -6,6 +6,8 @@ import com.taskmanager.model.Task;
 import com.taskmanager.service.ManagerSaveException;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public interface ITaskManager {
 
@@ -23,11 +25,11 @@ public interface ITaskManager {
 
     List<SubTask> getSubtaskByEpic(Integer epicId);
 
-    void updateTask(Task task) throws ManagerSaveException;
+    boolean updateTask(Task task) throws ManagerSaveException;
 
-    void updateEpic(Epic epic) throws ManagerSaveException;
+    boolean updateEpic(Epic epic) throws ManagerSaveException;
 
-    void updateSubtask(SubTask subTask) throws ManagerSaveException;
+    boolean updateSubtask(SubTask subTask) throws ManagerSaveException;
 
     int createNewTask(Task task) throws ManagerSaveException;
 
@@ -48,4 +50,6 @@ public interface ITaskManager {
     void removeEpicById(int id) throws ManagerSaveException;
 
     List<Task> getHistory();
+
+    Set<Task> getPrioritizedTasks();
 }
