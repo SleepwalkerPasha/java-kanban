@@ -114,10 +114,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     Duration.parse(fields[5]), LocalDateTime.parse(fields[6]));
         } else {
             String subtasks = fields[fields.length - 1].substring(1, fields[fields.length - 1].length() - 1);
-            String[] values = subtasks.split(", ");
             List<Integer> subtasksids = new ArrayList<>();
-            for (String s : values) {
-                subtasksids.add(Integer.valueOf(s));
+            if (!subtasks.equals("")) {
+                String[] values = subtasks.split(", ");
+                for (String s : values) {
+                    subtasksids.add(Integer.valueOf(s));
+                }
             }
             return new Epic(fields[2], fields[4], identifyStatus(fields[3]), Integer.valueOf(fields[0]),
                     Duration.parse(fields[5]), LocalDateTime.parse(fields[6]), subtasksids);

@@ -25,13 +25,13 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     @Test
     void loadFromFile() {
         int regtaskid1 = taskManager.createNewTask(new Task("Почистить обувь",
-                "Почисти обувь к приходу мамы домой", Duration.ZERO, LocalDateTime.now()));
+                "Почисти обувь к приходу мамы домой", Duration.ZERO, LocalDateTime.of(2022, 1, 13,12,0)));
         int epic1 = taskManager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду", Duration.ZERO,
-                LocalDateTime.now()));
+                null));
         int subtask1 = taskManager.createNewSubtask(new SubTask("Подготовить машину к переезду",
-                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.now(), epic1));
+                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.of(2022, 1, 14,12,0), epic1));
         int subtask2 = taskManager.createNewSubtask(new SubTask("Подготовить машину к переезду",
-                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.now(), epic1));
+                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.of(2022, 1, 15,12,0), epic1));
 
         taskManager.getTaskById(regtaskid1);
         taskManager.getSubtaskById(subtask1);
@@ -61,13 +61,15 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     void historyToString() {
         FileBackedTasksManager manager = (FileBackedTasksManager)  taskManager;
         int regtaskid1 = manager.createNewTask(new Task("Почистить обувь",
-                "Почисти обувь к приходу мамы домой", Duration.ZERO, LocalDateTime.now()));
-        int epic1 = manager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду", Duration.ZERO,
-                LocalDateTime.now()));
+                "Почисти обувь к приходу мамы домой", Duration.ofDays(1),
+                LocalDateTime.of(2023,1,12,12,0)));
+        int epic1 = manager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду"));
         int subtask1 = manager.createNewSubtask(new SubTask("Подготовить машину к переезду",
-                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.now(), epic1));
+                "Заправь машину и складируй в нее вещи", Duration.ofDays(2),
+                LocalDateTime.of(2023,1,14,12,0), epic1));
         int subtask2 = manager.createNewSubtask(new SubTask("Подготовить машину к переезду",
-                "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.now(), epic1));
+                "Заправь машину и складируй в нее вещи", Duration.ofDays(2),
+                LocalDateTime.of(2023,1,17,15,0), epic1));
 
         String history = manager.historyToString();
 

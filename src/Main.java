@@ -13,17 +13,15 @@ public class Main {
 
     public static void main(String[] args) {
         ITaskManager taskManager = Managers.getDefault();
-        int epicId = taskManager.createNewEpic(new Epic("dfgdfg", "gdfgdgd", Duration.ofDays(4),
-                null));
-        int epicId1 = taskManager.createNewEpic(new Epic("dfgdfg", "gdfgdgdgd", Duration.ofDays(3),
-                LocalDateTime.of(2024, 10,12, 10,0)));
+        int epicId = taskManager.createNewEpic(new Epic("dfgdfg", "gdfgdgd"));
+        int epicId1 = taskManager.createNewEpic(new Epic("dfgdfg", "gdfgdgdgd"));
         int subtask1id = taskManager.createNewSubtask(new SubTask("dfgdfg", "gdfgdgdgd", Duration.ofDays(3),
-                LocalDateTime.now(), epicId));
+                LocalDateTime.of(2023, 1,14,12,0), epicId));
         boolean correct = taskManager.updateSubtask(new SubTask("dfgdfdfdfg", "gdfgdgdgd", Status.NEW, subtask1id, Duration.ofDays(4),
-                LocalDateTime.of(2024, 10,12, 10,0), epicId));
+                LocalDateTime.of(2023, 10,12, 10,0), epicId));
         System.out.println("correct = " + correct);
         int subtask3id = taskManager.createNewSubtask(new SubTask("dfgdfg", "gdfgdgdgd", Duration.ofDays(3),
-                null, epicId1));
+                LocalDateTime.of(2023, 1,15,12,0), epicId1));
         System.out.println("subtask3id = " + subtask3id);
         int regTask = taskManager.createNewTask(new Task("sgzdfg", "gdfgdgdg", Duration.ZERO,
                 LocalDateTime.of(2023, 2, 12, 14,0)));
