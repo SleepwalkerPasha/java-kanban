@@ -278,11 +278,11 @@ public class InMemoryTaskManager implements ITaskManager {
             }
             setStartTimeForEpic(subtasks, epic);
             setEpicDuration(subtasks, epic);
-            setEndTimeForEpic(subtasks, epic);
+            setEndTimeForEpic(epic);
         }
     }
 
-    private void setEndTimeForEpic(List<SubTask> subtasks, Epic epic) {
+    private void setEndTimeForEpic(Epic epic) {
         LocalDateTime startTime = epic.getStartTime();
         Duration epicDuration = epic.getDuration();
         LocalDateTime endTime = startTime.plus(epicDuration);
