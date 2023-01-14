@@ -49,6 +49,10 @@ public class Task {
         this.status = Status.NEW;
     }
 
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
     public Duration getDuration() {
         return duration;
     }
@@ -98,6 +102,7 @@ public class Task {
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
+
     @Override
     public String toString() {
         return id + "|" + getClass().toString().substring(28) + "|" + name + "|" + status + "|" + description + "|";
@@ -117,24 +122,7 @@ public class Task {
 
     @Override
     public int hashCode() {
-        int hash = 17;
-        if (name != null)
-            hash += name.hashCode();
-        hash *= 31;
-        if (description != null)
-            hash += description.hashCode();
-        hash *= 11;
-        if (status != null)
-            hash += status.hashCode();
-        hash *= 13;
-        if (id != null)
-            hash += id;
-        if (duration != null)
-            hash += duration.hashCode();
-        hash *= 13;
-        if (startTime != null)
-            hash += startTime.hashCode();
-        return hash;
+        return Objects.hash(name, description, status, id, duration, startTime);
     }
 
 }

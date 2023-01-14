@@ -52,6 +52,11 @@ public class Epic extends Task {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode() + subTasksIds.hashCode();
+    }
+
+    @Override
     public LocalDateTime getEndTime() {
         return endTime;
     }

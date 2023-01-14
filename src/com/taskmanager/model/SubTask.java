@@ -38,4 +38,8 @@ public class SubTask extends Task {
         return super.equals(subTask) && Objects.equals(masterId, subTask.masterId);
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode() + masterId.hashCode();
+    }
 }
