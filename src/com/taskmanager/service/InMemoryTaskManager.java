@@ -7,6 +7,7 @@ import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -190,7 +191,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public void removeAllTasks() {
+    public void removeAllTasks(){
         if (!regularTasks.isEmpty()) {
             for (Integer taskId : regularTasks.keySet()) {
                 historyManager.remove(taskId);
@@ -200,7 +201,7 @@ public class InMemoryTaskManager implements ITaskManager {
     }
 
     @Override
-    public void removeAllEpicTasks() {
+    public void removeAllEpicTasks(){
         if (!epicTasks.isEmpty()) {
             for (Integer epicId : epicTasks.keySet()) {
                 historyManager.remove(epicId);

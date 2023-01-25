@@ -27,6 +27,10 @@ public class KVServer {
 		server.createContext("/load", this::load);
 	}
 
+	public String getApiToken() {
+		return apiToken;
+	}
+
 	private void load(HttpExchange h) throws IOException {
 		// TODO Добавьте получение значения по ключу
 		try	{

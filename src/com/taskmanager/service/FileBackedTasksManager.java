@@ -1,5 +1,6 @@
 package com.taskmanager.service;
 
+import com.taskmanager.exception.ManagerSaveException;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.Status;
 import com.taskmanager.model.SubTask;
@@ -17,6 +18,10 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private String filePath;
+
+    public FileBackedTasksManager() {
+
+    }
 
     public FileBackedTasksManager(String path) {
         filePath = path;
@@ -198,7 +203,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         boolean value = super.updateEpic(epic);
         save();
         return value;
-
     }
 
     @Override
@@ -206,7 +210,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         boolean value = super.updateSubtask(subTask);
         save();
         return value;
-
     }
 
     @Override

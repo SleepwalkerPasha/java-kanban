@@ -1,4 +1,4 @@
-package com.taskmanager.service;
+package com.taskmanager.exception;
 
 public class ManagerSaveException extends RuntimeException {
 
