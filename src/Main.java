@@ -1,13 +1,25 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.taskmanager.adapter.LocalDateTimeAdapter;
 import com.taskmanager.client.KVTaskClient;
+import com.taskmanager.model.Epic;
+import com.taskmanager.model.SubTask;
+import com.taskmanager.model.Task;
+import com.taskmanager.server.HttpTaskServer;
 import com.taskmanager.server.KVServer;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             KVServer server = new KVServer();
             server.start();
@@ -26,5 +38,6 @@ public class Main {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

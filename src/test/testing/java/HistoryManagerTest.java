@@ -36,7 +36,7 @@ class HistoryManagerTest {
     @Test
     void remove() {
         Task task = new Task("gfdgdfg", "dfgdgdfgd", Duration.ZERO, LocalDateTime.now());
-        ITaskManager taskManager = Managers.getDefault();
+        ITaskManager taskManager = Managers.getInMemoryTaskManager();
         int taskid = taskManager.createNewTask(task);
         manager.add(task);
 

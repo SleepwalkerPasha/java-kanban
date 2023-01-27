@@ -18,14 +18,14 @@ public class HttpTaskManager extends FileBackedTasksManager {
 
     private final Gson gson;
 
-    public HttpTaskManager(URI url, KVServer server) throws IOException {
+    public HttpTaskManager(URI url, String apiToken) throws IOException {
         super();
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .create();
-        KVTaskClient = new KVTaskClient(url, server.getApiToken());
+        KVTaskClient = new KVTaskClient(url, apiToken);
     }
 
     public String getByKey(String key) throws IOException, InterruptedException {
