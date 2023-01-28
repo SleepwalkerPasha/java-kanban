@@ -9,7 +9,7 @@ import java.net.URI;
 
 public class Managers {
 
-    public static ITaskManager getDefault(URI url, String apiToken) throws IOException {
+    public static HttpTaskManager getDefault(URI url, String apiToken) throws IOException {
         return new HttpTaskManager(url, apiToken);
     }
 

@@ -6,7 +6,6 @@ import com.taskmanager.adapter.LocalDateTimeAdapter;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
-import com.taskmanager.server.KVServer;
 import com.taskmanager.service.FileBackedTasksManager;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
     @Override
     public void save() {
         String json;
-        for (Task task: regularTasks.values()) {
+        for (Task task : regularTasks.values()) {
             json = gson.toJson(task);
             try {
                 KVTaskClient.put(task.getId().toString(), json);

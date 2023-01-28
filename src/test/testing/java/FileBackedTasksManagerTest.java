@@ -23,7 +23,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     }
 
     @Test
-    void loadFromFile() {
+    void load() {
         int regtaskid1 = taskManager.createNewTask(new Task("Почистить обувь",
                 "Почисти обувь к приходу мамы домой", Duration.ZERO, LocalDateTime.of(2022, 1, 13,12,0)));
         int epic1 = taskManager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду", Duration.ZERO,
@@ -36,7 +36,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
         taskManager.getTaskById(regtaskid1);
         taskManager.getSubtaskById(subtask1);
 
-        FileBackedTasksManager manager1 = FileBackedTasksManager.loadFromFile(filename);
+        FileBackedTasksManager manager1 = FileBackedTasksManager.load(filename);
 
         final List<Task> history = taskManager.getHistory();
         final List<Task> savedHistory = manager1.getHistory();

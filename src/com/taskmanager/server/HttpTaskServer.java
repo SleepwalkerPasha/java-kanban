@@ -38,7 +38,7 @@ public class HttpTaskServer {
             .create();
 
     public HttpTaskServer() throws IOException {
-        tasksManager = FileBackedTasksManager.loadFromFile(filename);
+        tasksManager = FileBackedTasksManager.load(filename);
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
         server.createContext("/tasks/", this::handleAllTasks);
         server.createContext("/tasks/task/", this::handleRegularTasks);

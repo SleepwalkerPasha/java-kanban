@@ -27,7 +27,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         filePath = path;
     }
 
-    public static FileBackedTasksManager loadFromFile(String filename) {
+    public static FileBackedTasksManager load(String filename) {
         FileBackedTasksManager manager = new FileBackedTasksManager(filename);
         List<String> info;
         try {
