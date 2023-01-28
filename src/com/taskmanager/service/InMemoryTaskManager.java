@@ -268,14 +268,16 @@ public class InMemoryTaskManager implements ITaskManager {
         return historyManager.getHistory();
     }
 
-    private void updateEpicInternals(Epic epic) {
+    protected void updateEpicInternals(Epic epic) {
         if (epic == null)
             return;
         List<Integer> subtaskIds = epic.getSubTasksIds();
         List<SubTask> subtasks = new ArrayList<>();
         if (!subtaskIds.isEmpty()) {
             for (Integer integer : subtaskIds) {
-                subtasks.add(subTasks.get(integer));
+                SubTask subTask = subTasks.get(integer);
+                if (subTask != null)
+                    subtasks.add(subTasks.get(integer));
             }
             setStartTimeForEpic(subtasks, epic);
             setEpicDuration(subtasks, epic);

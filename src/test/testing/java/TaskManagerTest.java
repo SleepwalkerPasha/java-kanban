@@ -14,7 +14,7 @@ import java.util.List;
 
 abstract class TaskManagerTest<T extends ITaskManager> {
 
-    ITaskManager taskManager;
+    static ITaskManager taskManager;
 
     @Test
     void updateTask() {

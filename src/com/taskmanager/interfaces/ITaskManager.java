@@ -52,4 +52,6 @@ public interface ITaskManager {
     List<Task> getHistory();
 
     Set<Task> getPrioritizedTasks();
+
+    int getAllTaskCounter();
 }

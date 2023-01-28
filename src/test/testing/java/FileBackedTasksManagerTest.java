@@ -26,8 +26,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
     void load() {
         int regtaskid1 = taskManager.createNewTask(new Task("Почистить обувь",
                 "Почисти обувь к приходу мамы домой", Duration.ZERO, LocalDateTime.of(2022, 1, 13,12,0)));
-        int epic1 = taskManager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду", Duration.ZERO,
-                null));
+        int epic1 = taskManager.createNewEpic(new Epic("Переезд", "Подготовь все к переезду"));
         int subtask1 = taskManager.createNewSubtask(new SubTask("Подготовить машину к переезду",
                 "Заправь машину и складируй в нее вещи", Duration.ZERO, LocalDateTime.of(2022, 1, 14,12,0), epic1));
         int subtask2 = taskManager.createNewSubtask(new SubTask("Подготовить машину к переезду",

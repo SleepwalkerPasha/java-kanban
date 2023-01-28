@@ -35,6 +35,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+        if (info.isEmpty())
+            return manager;
         int maxId = 0;
         for (int i = 1; i < info.size(); i++) {
             String s = info.get(i);
@@ -45,9 +47,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 String taskString = task.toString();
                 Integer taskId = task.getId();
                 if (taskString.contains("Epic")) {
-                    manager.epicTasks.put(taskId, (Epic) task);
+                    Epic epic = (Epic) task;
+                    manager.epicTasks.put(taskId, epic);
                 } else if (taskString.contains("SubTask")) {
-                    manager.subTasks.put(taskId, (SubTask) task);
+                    SubTask subTask = (SubTask) task;
+                    manager.subTasks.put(taskId, subTask);
+                    Epic epic = manager.epicTasks.get(subTask.getMasterId());
+                    if (epic != null)
+                        manager.updateEpicInternals(epic);
                 } else {
                     manager.regularTasks.put(taskId, task);
                 }

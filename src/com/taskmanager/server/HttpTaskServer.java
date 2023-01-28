@@ -6,14 +6,15 @@ import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import com.taskmanager.adapter.LocalDateTimeAdapter;
+import com.taskmanager.interfaces.ITaskManager;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
 import com.taskmanager.service.FileBackedTasksManager;
+import com.taskmanager.service.Managers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -23,28 +24,28 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 public class HttpTaskServer {
+
     public static final String filename = "src/com/taskmanager/resources/tasks.csv";
-    private final FileBackedTasksManager tasksManager;
+
+    private final ITaskManager tasksManager = Managers.getFileBackedTaskManager(filename);
 
     private final HttpServer server;
 
     private static final int PORT = 8080;
-    private URI url;
 
-    private static final Gson gson = new GsonBuilder()
-            .serializeNulls()
-            .setPrettyPrinting()
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .create();
+    private static final Gson gson = Managers.getGson();
 
     public HttpTaskServer() throws IOException {
-        tasksManager = FileBackedTasksManager.load(filename);
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
         server.createContext("/tasks/", this::handleAllTasks);
         server.createContext("/tasks/task/", this::handleRegularTasks);
         server.createContext("/tasks/epic/", this::handleEpics);
         server.createContext("/tasks/subtask/", this::handleSubtasks);
         server.createContext("/tasks/history/", this::handleHistory);
+    }
+
+    public void stop() {
+        server.stop(1);
     }
 
     public void start() {
@@ -73,8 +74,7 @@ public class HttpTaskServer {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             httpExchange.close();
         }
     }
@@ -105,11 +105,14 @@ public class HttpTaskServer {
                             System.out.println("Epic id пустой");
                             httpExchange.sendResponseHeaders(405, 0);
                         }
+                        int taskId = 0;
                         if (newTask.getId() == null)
-                            tasksManager.createNewSubtask(newTask);
+                            taskId = tasksManager.createNewSubtask(newTask);
                         else
                             tasksManager.updateSubtask(newTask);
                         System.out.println("Изменили сабтаски");
+                        if (taskId != 0)
+                            sendText(httpExchange, Integer.toString(taskId));
                         httpExchange.sendResponseHeaders(200, 0);
                         break;
                     case "DELETE":
@@ -130,8 +133,7 @@ public class HttpTaskServer {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             httpExchange.close();
         }
     }
@@ -163,11 +165,14 @@ public class HttpTaskServer {
                         } catch (JsonSyntaxException exception) {
                             System.out.println(exception.getMessage());
                         }
+                        int taskId = 0;
                         if (newTask != null && newTask.getId() == null)
-                            tasksManager.createNewEpic(newTask);
+                            taskId = tasksManager.createNewEpic(newTask);
                         else
                             tasksManager.updateEpic(newTask);
                         System.out.println("Изменили эпики");
+                        if (taskId != 0)
+                            sendText(httpExchange, Integer.toString(taskId));
                         httpExchange.sendResponseHeaders(200, 0);
                         break;
                     case "DELETE":
@@ -188,8 +193,7 @@ public class HttpTaskServer {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             httpExchange.close();
         }
     }
@@ -217,12 +221,20 @@ public class HttpTaskServer {
                         break;
                     case "POST":
                         String data = readText(httpExchange);
-                        Task newTask = gson.fromJson(data, Task.class);
-                        if (newTask.getId() == null)
-                            tasksManager.createNewTask(newTask);
+                        Task newTask = null;
+                        try {
+                            newTask = gson.fromJson(data, Task.class);
+                        } catch (JsonSyntaxException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        int taskId = 0;
+                        if (newTask != null && newTask.getId() == null)
+                            taskId = tasksManager.createNewTask(newTask);
                         else
                             tasksManager.updateTask(newTask);
                         System.out.println("Изменили задачи");
+                        if (taskId != 0)
+                            sendText(httpExchange, Integer.toString(taskId));
                         httpExchange.sendResponseHeaders(200, 0);
                         break;
                     case "DELETE":
@@ -243,8 +255,7 @@ public class HttpTaskServer {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             httpExchange.close();
         }
     }
@@ -287,8 +298,7 @@ public class HttpTaskServer {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             httpExchange.close();
         }
     }
