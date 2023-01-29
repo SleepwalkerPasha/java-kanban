@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.net.HttpURLConnection.*;
+
 class HttpTaskServerTest {
 
     private static HttpTaskServer server;
@@ -177,7 +179,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_CREATED, response.statusCode());
     }
 
     @Test
@@ -211,7 +213,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_ACCEPTED, response.statusCode());
         Assertions.assertNotNull(response.body());
     }
 
@@ -250,7 +252,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_CREATED, response.statusCode());
     }
 
     @Test
@@ -283,7 +285,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_ACCEPTED, response.statusCode());
         Assertions.assertNotNull(response.body());
     }
 
@@ -322,7 +324,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_CREATED, response.statusCode());
     }
 
     @Test
@@ -356,7 +358,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_ACCEPTED, response.statusCode());
         Assertions.assertNotNull(response.body());
     }
 
@@ -373,7 +375,7 @@ class HttpTaskServerTest {
         Assertions.assertDoesNotThrow(() -> {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         });
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(HTTP_OK, response.statusCode());
         Assertions.assertNotNull(response.body());
         Assertions.assertEquals(jsonHistory, response.body());
     }

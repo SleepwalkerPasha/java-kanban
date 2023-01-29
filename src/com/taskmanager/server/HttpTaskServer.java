@@ -1,26 +1,23 @@
 package com.taskmanager.server;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import com.taskmanager.adapter.LocalDateTimeAdapter;
 import com.taskmanager.interfaces.ITaskManager;
 import com.taskmanager.model.Epic;
 import com.taskmanager.model.SubTask;
 import com.taskmanager.model.Task;
-import com.taskmanager.service.FileBackedTasksManager;
 import com.taskmanager.service.Managers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.net.HttpURLConnection.*;
 
 
 public class HttpTaskServer {
@@ -66,11 +63,11 @@ public class HttpTaskServer {
                     System.out.println("Отправили историю");
                 } else {
                     System.out.println("Ждем GET а получили" + requestMethod);
-                    httpExchange.sendResponseHeaders(405, 0);
+                    httpExchange.sendResponseHeaders(HTTP_BAD_METHOD, 0);
                 }
             } else {
                 System.out.println("Такого пути нет");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,7 +100,8 @@ public class HttpTaskServer {
                         SubTask newTask = gson.fromJson(data, SubTask.class);
                         if (newTask.getMasterId() == null) {
                             System.out.println("Epic id пустой");
-                            httpExchange.sendResponseHeaders(405, 0);
+                            httpExchange.sendResponseHeaders(HTTP_CONFLICT, 0);
+                            return;
                         }
                         int taskId = 0;
                         if (newTask.getId() == null)
@@ -113,23 +111,23 @@ public class HttpTaskServer {
                         System.out.println("Изменили сабтаски");
                         if (taskId != 0)
                             sendText(httpExchange, Integer.toString(taskId));
-                        httpExchange.sendResponseHeaders(200, 0);
+                        httpExchange.sendResponseHeaders(HTTP_CREATED, 0);
                         break;
                     case "DELETE":
                         if (query != null && id != null) {
                             tasksManager.removeSubtaskById(id);
                             System.out.println("Удалили сабтаск " + id);
-                            httpExchange.sendResponseHeaders(200, 0);
+                            httpExchange.sendResponseHeaders(HTTP_ACCEPTED, 0);
                         }
                         break;
                     default:
                         System.out.println("Ожидаем GET POST DELETE, получили " + requestMethod);
-                        httpExchange.sendResponseHeaders(405, 0);
+                        httpExchange.sendResponseHeaders(HTTP_BAD_METHOD, 0);
                         break;
                 }
             } else {
                 System.out.println("Такого пути нет");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -173,23 +171,23 @@ public class HttpTaskServer {
                         System.out.println("Изменили эпики");
                         if (taskId != 0)
                             sendText(httpExchange, Integer.toString(taskId));
-                        httpExchange.sendResponseHeaders(200, 0);
+                        httpExchange.sendResponseHeaders(HTTP_CREATED, 0);
                         break;
                     case "DELETE":
                         if (query != null && id != null) {
                             tasksManager.removeEpicById(id);
                             System.out.println("Удалили эпик " + id);
-                            httpExchange.sendResponseHeaders(200, 0);
+                            httpExchange.sendResponseHeaders(HTTP_ACCEPTED, 0);
                         }
                         break;
                     default:
                         System.out.println("Ожидаем GET POST DELETE, получили " + requestMethod);
-                        httpExchange.sendResponseHeaders(405, 0);
+                        httpExchange.sendResponseHeaders(HTTP_BAD_METHOD, 0);
                         break;
                 }
             } else {
                 System.out.println("Такого пути нет");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -235,23 +233,23 @@ public class HttpTaskServer {
                         System.out.println("Изменили задачи");
                         if (taskId != 0)
                             sendText(httpExchange, Integer.toString(taskId));
-                        httpExchange.sendResponseHeaders(200, 0);
+                        httpExchange.sendResponseHeaders(HTTP_CREATED, 0);
                         break;
                     case "DELETE":
                         if (query != null && id != null) {
                             tasksManager.removeTaskById(id);
                             System.out.println("Удалили задачу " + id);
-                            httpExchange.sendResponseHeaders(200, 0);
+                            httpExchange.sendResponseHeaders(HTTP_ACCEPTED, 0);
                         }
                         break;
                     default:
                         System.out.println("Ожидаем GET POST DELETE, получили " + requestMethod);
-                        httpExchange.sendResponseHeaders(405, 0);
+                        httpExchange.sendResponseHeaders(HTTP_BAD_METHOD, 0);
                         break;
                 }
             } else {
                 System.out.println("Такого пути нет");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -267,12 +265,12 @@ public class HttpTaskServer {
             id = parseInt(pathId);
             if (id == -1) {
                 System.out.println("Некорректный id");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_CONFLICT, 0);
                 return null;
             }
             if (id > tasksManager.getAllTaskCounter() || id <= 0) {
                 System.out.println("задачи с таким id не найдено");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_NO_CONTENT, 0);
                 return null;
             }
         }
@@ -290,11 +288,11 @@ public class HttpTaskServer {
                     sendText(httpExchange, jsonList);
                 } else {
                     System.out.println("Ожидаем GET получили " + requestMethod);
-                    httpExchange.sendResponseHeaders(405, 0);
+                    httpExchange.sendResponseHeaders(HTTP_BAD_METHOD, 0);
                 }
             } else {
                 System.out.println("Такого пути нет");
-                httpExchange.sendResponseHeaders(405, 0);
+                httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -318,7 +316,7 @@ public class HttpTaskServer {
     protected void sendText(HttpExchange h, String text) throws IOException {
         byte[] resp = text.getBytes(UTF_8);
         h.getResponseHeaders().add("Content-Type", "application/json");
-        h.sendResponseHeaders(200, resp.length);
+        h.sendResponseHeaders(HTTP_OK, resp.length);
         h.getResponseBody().write(resp);
     }
 

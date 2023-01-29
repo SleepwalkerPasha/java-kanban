@@ -1,6 +1,7 @@
 package com.taskmanager.client;
 
 import com.google.gson.Gson;
+import com.taskmanager.exception.ManagerSaveException;
 import com.taskmanager.server.KVServer;
 
 import java.io.IOException;
@@ -30,8 +31,9 @@ public class KVTaskClient {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .uri(url1)
                 .build();
-        HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
-        HttpResponse<String> response = client.send(request, handler);
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200)
+            throw new ManagerSaveException("Произошла ошибка при сохранении");
         System.out.println(response.body());
         System.out.println(response.statusCode());
     }
@@ -43,8 +45,9 @@ public class KVTaskClient {
                 .GET()
                 .uri(url1)
                 .build();
-        HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
-        HttpResponse<String> response = client.send(request, handler);
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200)
+            throw new ManagerSaveException("Произошла ошибка при сохранении");
         System.out.println(response.body());
         System.out.println(response.statusCode());
         return response.body();

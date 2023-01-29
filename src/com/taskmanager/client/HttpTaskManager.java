@@ -59,10 +59,12 @@ public class HttpTaskManager extends FileBackedTasksManager {
             }
         }
         String history = historyToString();
-        try {
-            KVTaskClient.put("history", history);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        if (!history.isBlank()) {
+            try {
+                KVTaskClient.put("history", history);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
